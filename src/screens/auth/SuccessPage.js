@@ -3,8 +3,8 @@ import React, { useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import i18n from "./i18n"; // Adjust path if needed (e.g., "../screens/i18n")
-import { getLanguage } from "./languageSync"; // Adjust path to your sync file
+import i18n from "../../i18n/i18n";
+import { getLanguage } from "../../i18n/languageSync";
 
 export default function SuccessPage({ navigation }) {
   useEffect(() => {

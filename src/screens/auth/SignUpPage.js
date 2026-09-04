@@ -1,4 +1,4 @@
-import CustomButton from "./CustomButton";
+import CustomButton from "../../components/buttons/CustomButton";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useState, useEffect } from "react";
 import {
@@ -11,9 +11,9 @@ import {
   Dimensions,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import KeyboardAvoidingContainer from "./KeyboardAvoidingContainer";
-import LanguageToggle from "./LanguageToggle";
-import i18n from "./i18n";
+import KeyboardAvoidingContainer from "../../components/KeyboardAvoidingContainer";
+import LanguageToggle from "../../components/LanguageToggle";
+import i18n from "../../i18n/i18n";
 import emailValidator from "email-validator"; // Import email-validator
 
 const { width, height } = Dimensions.get("window");
@@ -77,7 +77,7 @@ export default function SignUpPage({ navigation }) {
     if (!phoneRegex.test(number)) {
       Alert.alert(
         i18n.t("invalidPhoneTitle"),
-        i18n.t("phoneLengthMessage", { length: 9 })
+        i18n.t("phoneLengthMessage", { length: 9 }),
       );
       return;
     }
@@ -87,7 +87,7 @@ export default function SignUpPage({ navigation }) {
     if (!idRegex.test(idNumber)) {
       Alert.alert(
         i18n.t("invalidIdTitle"),
-        i18n.t("idLengthMessage", { length: 11 })
+        i18n.t("idLengthMessage", { length: 11 }),
       );
       return;
     }
@@ -96,7 +96,7 @@ export default function SignUpPage({ navigation }) {
     if (password.length < 6) {
       Alert.alert(
         i18n.t("invalidPasswordTitle"),
-        i18n.t("passwordMinLengthMessage", { length: 6 })
+        i18n.t("passwordMinLengthMessage", { length: 6 }),
       );
       return;
     }
@@ -104,7 +104,7 @@ export default function SignUpPage({ navigation }) {
     if (password !== repeatPassword) {
       Alert.alert(
         i18n.t("passwordMismatchTitle"),
-        i18n.t("passwordMismatchMessage")
+        i18n.t("passwordMismatchMessage"),
       );
       return;
     }
@@ -120,12 +120,12 @@ export default function SignUpPage({ navigation }) {
       // Step 1: Check if the email already exists in the database
       const checkEmailResponse = await fetch(
         `https://new-elevator-api.elevator-rand.workers.dev/user/check-email?email=${encodeURIComponent(
-          mail
+          mail,
         )}`,
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },
-        }
+        },
       );
 
       if (!checkEmailResponse.ok) {
@@ -162,7 +162,7 @@ export default function SignUpPage({ navigation }) {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(userData),
-        }
+        },
       );
 
       if (!response.ok) {

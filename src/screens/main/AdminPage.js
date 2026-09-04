@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react"; // Add useState
 import { View, Text, StyleSheet } from "react-native";
-import CustomButton_2 from "./CustomButton_2";
+import CustomButton_2 from "../../components/buttons/CustomButton_2";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import i18n from "./i18n"; // Adjust path if needed
+import i18n from "../../i18n/i18n";
 import { useIsFocused } from "@react-navigation/native";
 
 export default function AdminPage({ navigation }) {

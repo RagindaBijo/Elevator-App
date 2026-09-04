@@ -1,6 +1,6 @@
 import { I18n } from "i18n-js";
-import en from "../screens/en.json";
-import ka from "../screens/ka.json";
+import en from "./locales/en.json";
+import ka from "./locales/ka.json";
 
 // Create an I18n instance
 const i18n = new I18n({

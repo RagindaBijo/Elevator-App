@@ -1,4 +1,4 @@
-import CustomButton from "./CustomButton";
+import CustomButton from "../../components/buttons/CustomButton";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useState, useEffect } from "react";
 import {
@@ -15,9 +15,9 @@ import {
   ActivityIndicator,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import KeyboardAvoidingContainer from "./KeyboardAvoidingContainer";
-import LanguageToggle from "./LanguageToggle";
-import i18n from "../screens/i18n"; // Import i18n
+import KeyboardAvoidingContainer from "../../components/KeyboardAvoidingContainer";
+import LanguageToggle from "../../components/LanguageToggle";
+import i18n from "../../i18n/i18n";
 
 const { width, height } = Dimensions.get("window");
 const wp = (percentage) => (width * percentage) / 100;
@@ -60,7 +60,7 @@ export default function LogInPage({ navigation }) {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email: mail, password }),
-        }
+        },
       );
       if (!response.ok) {
         if (response.status === 401) {
@@ -85,7 +85,7 @@ export default function LogInPage({ navigation }) {
           "isSignedIn:",
           "true",
           "isAdmin:",
-          storedIsAdmin
+          storedIsAdmin,
         );
 
         if (data.admin === 1) {
@@ -130,7 +130,7 @@ export default function LogInPage({ navigation }) {
         </View>
         <View style={styles.logoContainer}>
           <Image
-            source={require("../assets/icon.png")}
+            source={require("../../../assets/icon.png")}
             style={styles.logoImage}
             resizeMode="contain"
           />

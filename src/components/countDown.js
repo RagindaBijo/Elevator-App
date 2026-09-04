@@ -1,4 +1,4 @@
-// countDown.js
+// CountDown.js
 
 import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet } from "react-native";

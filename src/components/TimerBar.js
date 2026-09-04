@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { View, Text, StyleSheet, Animated } from "react-native";
 import Svg, { Circle } from "react-native-svg";
-import CountdownTimer from "./countDown";
+import CountdownTimer from "../screens/countDown";
 import { db } from "./firebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";

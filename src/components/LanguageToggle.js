@@ -11,8 +11,8 @@ const LanguageToggle = ({ onLanguageChange, language }) => {
   const [position] = useState(new Animated.Value(language === "en" ? 0 : 1)); // Initialize based on prop
 
   const languages = [
-    { code: "en", flag: require("../assets/en.png") },
-    { code: "ka", flag: require("../assets/ge.png") },
+    { code: "en", flag: require("../../assets/en.png") },
+    { code: "ka", flag: require("../../assets/ge.png") },
   ];
 
   useEffect(() => {

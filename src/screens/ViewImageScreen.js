@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react";  
 import { View, Image, StyleSheet, TouchableOpacity } from "react-native";
 
 export default function ViewImageScreen({ route, navigation }) {

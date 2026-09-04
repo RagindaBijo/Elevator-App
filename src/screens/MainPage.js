@@ -1,4 +1,4 @@
-import CountdownTimer from "./countDown";
+import CountdownTimer from "../components/countDown";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import NetInfo from "@react-native-community/netinfo";
 import { Ionicons } from "@expo/vector-icons";
@@ -8,12 +8,12 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Clipboard,
   Animated,
   Platform,
   Dimensions, // Added Dimensions
 } from "react-native";
-import i18n from "./i18n"; // Adjust path if needed
+import * as Clipboard from "expo-clipboard";
+import i18n from "../i18n/i18n"; // Adjust path if needed
 import { useIsFocused } from "@react-navigation/native";
 
 // Get screen dimensions
@@ -39,7 +39,7 @@ export default function MainPage({ navigation }) {
           i18n.locale = savedLanguage;
         }
 
-        // Check network status
+        // Check =network status
         const netInfo = await NetInfo.fetch();
         setIsOffline(!netInfo.isConnected);
 

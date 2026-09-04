@@ -1,17 +1,37 @@
 // App.js
+// import React, { useEffect, useRef } from "react";
+// import { Animated, StyleSheet, Platform, StatusBar } from "react-native"; // Added StatusBar
+// import { NavigationContainer } from "@react-navigation/native";
+// import { createNativeStackNavigator } from "@react-navigation/native-stack";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
+// import * as NavigationBar from "expo-navigation-bar";
+// import SplashScreenView from "./screens/SplashScreenView";
+// import LogInPage from "./screens/LogInPage";
+// import MainActivity from "./screens/MainActivity";
+// import SignUpPage from "./screens/SignUpPage";
+// import AdminPage from "./screens/AdminPage";
+// import SuccessPage from "./screens/SuccessPage";
+// import ProfilePage from "./screens/ProfilePage";
+
+
+
+// App.js
 import React, { useEffect, useRef } from "react";
-import { Animated, StyleSheet, Platform, StatusBar } from "react-native"; // Added StatusBar
+import { Animated, StyleSheet, Platform, StatusBar } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as NavigationBar from "expo-navigation-bar";
-import SplashScreenView from "./screens/SplashScreenView";
-import LogInPage from "./screens/LogInPage";
-import MainActivity from "./screens/MainActivity";
-import SignUpPage from "./screens/SignUpPage";
-import AdminPage from "./screens/AdminPage";
-import SuccessPage from "./screens/SuccessPage";
-import ProfilePage from "./screens/ProfilePage";
+
+// Screens
+import SplashScreenView from "./src/screens/SplashScreenView";
+import LogInPage from "./src/screens/auth/LogInPage";
+import SignUpPage from "./src/screens/auth/SignUpPage";
+import SuccessPage from "./src/screens/auth/SuccessPage";
+import MainActivity from "./src/screens/main/MainActivity";
+import AdminPage from "./src/screens/main/AdminPage";
+import ProfilePage from "./src/screens/main/ProfilePage";
+
 
 const Stack = createNativeStackNavigator();
 

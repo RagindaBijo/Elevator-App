@@ -1,4 +1,4 @@
-import CustomButton from "./CustomButton";
+import CustomButton from "../../components/buttons/CustomButton";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useState, useEffect } from "react";
 import {
@@ -17,9 +17,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useIsFocused } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
-import KeyboardAvoidingContainer from "./KeyboardAvoidingContainer";
-import LanguageToggle from "./LanguageToggle";
-import i18n from "./i18n"; // Adjust path if needed
+import KeyboardAvoidingContainer from "../../components/KeyboardAvoidingContainer";
+import LanguageToggle from "../../components/LanguageToggle";
+import i18n from "../../i18n/i18n";
 
 // Get screen dimensions
 const { width, height } = Dimensions.get("window");
@@ -73,7 +73,7 @@ export default function ProfilePage({ navigation }) {
         }
 
         const response = await fetch(
-          `https://new-elevator-api.elevator-rand.workers.dev/user/${userId}`
+          `https://new-elevator-api.elevator-rand.workers.dev/user/${userId}`,
         );
         if (!response.ok) {
           if (response.status === 404) {
@@ -102,7 +102,7 @@ export default function ProfilePage({ navigation }) {
         setProfileImage(
           data.profileImageUrl
             ? { uri: `${data.profileImageUrl}?t=${new Date().getTime()}` }
-            : null
+            : null,
         );
       } catch (error) {
         console.error("Error fetching user data:", error.message);
@@ -166,13 +166,13 @@ export default function ProfilePage({ navigation }) {
     if (status !== "granted") {
       Alert.alert(
         i18n.t("permissionDeniedTitle"),
-        i18n.t("permissionDeniedMessage")
+        i18n.t("permissionDeniedMessage"),
       );
       return;
     }
 
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      mediaTypes: ["images"],
       allowsEditing: true,
       aspect: [1, 1],
       quality: 1,
@@ -189,17 +189,15 @@ export default function ProfilePage({ navigation }) {
       const userId = await AsyncStorage.getItem("userId");
       if (!userId) throw new Error("No user ID found");
 
-      // Fetch the image as a blob
-      const response = await fetch(uri);
-      const blob = await response.blob();
-
-      // Prepare FormData for upload
+      // Create FormData the correct React Native way
       const formData = new FormData();
+
       formData.append("file", {
-        uri,
-        type: blob.type || "image/jpeg",
-        name: "profile.jpg",
+        uri: uri,
+        type: "image/jpeg", // or "image/png" if needed
+        name: `profile_${userId}.jpg`,
       });
+
       formData.append("userId", userId);
 
       const uploadResponse = await fetch(
@@ -207,19 +205,26 @@ export default function ProfilePage({ navigation }) {
         {
           method: "POST",
           body: formData,
-        }
+          
+        },
       );
 
+      // Better error logging
       if (!uploadResponse.ok) {
-        throw new Error(`Image upload failed: ${uploadResponse.status}`);
+        const errorText = await uploadResponse.text();
+        console.log("Server response:", errorText);
+        throw new Error(
+          `Image upload failed: ${uploadResponse.status} - ${errorText}`,
+        );
       }
 
       const data = await uploadResponse.json();
+
       if (data.success) {
         const newImageUrl = `${data.url}?t=${new Date().getTime()}`;
         setUserData((prev) => ({ ...prev, profileImageUrl: data.url }));
         setProfileImage({ uri: newImageUrl });
-        console.log("Image uploaded successfully, URL:", data.url);
+        console.log("Image uploaded successfully:", data.url);
       } else {
         throw new Error("Upload response indicated failure");
       }
@@ -253,7 +258,7 @@ export default function ProfilePage({ navigation }) {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ number: trimmedPhone }),
-        }
+        },
       );
 
       if (!response.ok) {
@@ -326,7 +331,7 @@ export default function ProfilePage({ navigation }) {
           <TouchableOpacity onPress={handleProfileImagePress}>
             <View style={styles.profileContainer}>
               <Image
-                source={profileImage || require("../assets/icon1.jpg")}
+                source={profileImage || require("../../../assets/icon1.jpg")}
                 style={styles.profileImage}
               />
             </View>
@@ -470,7 +475,7 @@ export default function ProfilePage({ navigation }) {
               activeOpacity={1}
             >
               <Image
-                source={profileImage || require("../assets/icon1.jpg")}
+                source={profileImage || require("../../../assets/icon1.jpg")}
                 style={styles.fullImage}
               />
             </TouchableOpacity>

@@ -1,16 +1,21 @@
 import * as React from "react";
-import { useState, useEffect } from "react"; // Add useState, useEffect
+import { useState, useEffect } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { View, StyleSheet, Platform } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import AsyncStorage from "@react-native-async-storage/async-storage"; // Add AsyncStorage
-import i18n from "./i18n"; // Adjust path if needed
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import MainPage from "./mainPage";
-import ProfilePage from "./ProfilePage";
-import LogInPage from "./LogInPage";
-import SignUpPage from "./SignUpPage";
-import SuccessPage from "./SuccessPage";
+// i18n
+import i18n from "../../i18n/i18n";                    
+
+// Screens in the same folder
+import ProfilePage from "./ProfilePage";               
+
+// Screens in auth folder
+import LogInPage from "../auth/LogInPage";             
+import SignUpPage from "../auth/SignUpPage";           
+import SuccessPage from "../auth/SuccessPage";         
+import MainPage from "../MainPage";    
 
 const Tab = createBottomTabNavigator();
 
