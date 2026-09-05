@@ -1,4 +1,4 @@
-```markdown
+
 # Elevator Access Management App
 
 A mobile + web application for controlled elevator access in residential buildings.
