@@ -168,6 +168,15 @@ npm install
 
 ### Running the App
 
+### Test Account (for demo purposes)
+
+You can use the following credentials to log in and explore the app:
+
+- **Email:** `admin@test.com`  
+- **Password:** `admin`
+
+> Note: This is a demo account created for testing. Do not use real credentials.
+
 #### Option 1 – Web (easiest, no extra apps needed)
 ```bash
 npx expo start --web
