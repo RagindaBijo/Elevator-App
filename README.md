@@ -1,72 +1,69 @@
+```markdown
 # Elevator Access Management App
 
-A mobile application concept designed for controlled elevator access in residential buildings.
+A mobile + web application for controlled elevator access in residential buildings.
 
-The application was developed around a simple idea: residents should be able to access the elevator using a temporary access code that is associated with their account and updated automatically. The system also provides residents with account information such as their profile details and payment status.
+Residents can access the elevator using a temporary access code linked to their account. The code updates automatically, and users can also view their profile details and payment status.
 
-The project was independently designed and developed based on requirements provided by an early-stage startup concept.
+The project was independently designed and developed based on requirements from an early-stage startup concept.
+
+> **Try it online**  
+> You can run the app directly in your browser (no Expo Go or mobile device required).
+
+---
 
 ## Overview
 
-The application acts as the mobile client for an elevator access-management system.
+The application acts as the client for an elevator access-management system.
 
-Each authorized resident has an account associated with their building and elevator access. After authentication, the application displays the current access code assigned to the user.
+Each authorized resident has an account associated with their building. After logging in, the app displays the current access code assigned to the user.
 
-The access code was originally designed to change very frequently, similar to a one-time authentication code. The design was later changed to a daily code to reduce unnecessary requests to the backend and scheduled services while still providing regularly changing access credentials.
+Originally the access code was designed to change very frequently (like a one-time code). It was later changed to a **daily code** to reduce unnecessary backend requests and scheduled jobs while still providing regularly rotating credentials.
 
-The application also supports local persistence of the latest valid code. This means that after the application retrieves the current code while the device has an internet connection, the code can remain available locally during temporary connectivity loss.
+The latest valid code is also stored locally, so it remains available during temporary loss of internet connection.
+
+---
 
 ## Main Features
 
 ### Authentication
-
-* User registration and login
-* Persistent sign-in state
-* Separate navigation flows for regular users and administrators
-* Splash screen with authentication-state checking
+- User registration and login
+- Persistent sign-in state
+- Separate navigation flows for regular users and administrators
+- Splash screen with authentication-state checking
 
 ### Elevator Access Code
-
-* Displays the user's current elevator access code
-* Access codes are periodically regenerated
-* Daily access-code model designed to reduce unnecessary backend requests
-* Latest retrieved code can be stored locally for temporary offline availability
+- Displays the user's current elevator access code
+- Access codes are regenerated on a daily schedule
+- Latest retrieved code is stored locally for offline availability
 
 ### User Profile
-
-* Personal user information
-* Profile image support
-* Payment-status information
-* Account-related data
+- Personal user information
+- Profile image support
+- Payment-status information
 
 ### Administration
+- Dedicated administrator interface
+- Separate admin navigation flow
 
-* Dedicated administrator interface
-* Separate admin navigation flow
-* Designed to support management of users and access-related information
+### Offline Support
+When the app successfully fetches the current code while online, it stores it locally.  
+If the device later loses connectivity, the stored code remains usable until the next required update.
 
-### Offline Considerations
-
-The application was designed with intermittent connectivity in mind.
-
-When a user opens the application with an internet connection, the current access code can be retrieved and stored locally. If connectivity is subsequently unavailable, the locally stored code remains available until the next required update.
-
-This approach reduces unnecessary network requests while maintaining usability in situations where the user temporarily has no connection.
+---
 
 ## Architecture
 
-The project consists of a mobile client and cloud-based backend services.
-
 ```text
 ┌─────────────────────────────┐
-│      React Native App       │
+│   React Native + Expo App   │
 │                             │
 │  Authentication             │
 │  Elevator Access Code       │
 │  User Profile               │
-│  Payment Status              │
-│  Admin Interface             │
-│  Local Storage               │
+│  Payment Status             │
+│  Admin Interface            │
+│  Local Storage              │
 └──────────────┬──────────────┘
                │
                │ API Requests
@@ -91,58 +88,51 @@ The project consists of a mobile client and cloud-based backend services.
 └──────────────┘  └──────────────┘
 ```
 
+---
+
 ## Technology Stack
 
-### Mobile
+**Frontend**
+- React Native
+- Expo
+- React Navigation
+- AsyncStorage
+- NetInfo
+- Expo Image Picker
+- i18n-js
 
-* React Native
-* Expo
-* JavaScript
-* React Navigation
-* AsyncStorage
-* NetInfo
-* Expo Image Picker
+**Backend & Cloud**
+- Cloudflare Workers
+- Cloudflare D1 (SQL database)
+- Cloudflare R2 (object storage)
+- Scheduled Workers (cron)
 
-### Backend & Cloud
+**Other**
+- Firebase
+- Git / GitHub
 
-* Node.js
-* Cloudflare Workers
-* Cloudflare D1
-* Cloudflare R2
-* Scheduled Workers
-
-### Additional Technologies
-
-* Firebase
-* i18n-js
-* Git
-* GitHub
+---
 
 ## Design Decisions
 
 ### Daily Access Codes
+The initial concept used rapidly changing codes. During development the frequency was reduced to once per day for these reasons:
 
-The initial concept used rapidly changing codes. During development, the update frequency was changed to once per day.
+- Fewer backend requests
+- Lower load on scheduled workers
+- Reduced network dependency
+- Lower infrastructure cost
+- Simpler user experience
 
-The main reasons were:
-
-* Reduce backend requests
-* Reduce unnecessary scheduled-worker executions
-* Reduce network dependency
-* Reduce infrastructure and egress overhead
-* Keep the user experience simple
-
-The daily code does not necessarily reset exactly at midnight. The update time can be shifted to avoid inconvenient changes around the time residents may be returning home.
+The daily reset time can be shifted away from midnight to avoid inconvenient code changes when residents are returning home.
 
 ### Local Code Persistence
+The latest valid code is stored on the device after being fetched.  
+This provides a graceful fallback when the user temporarily loses internet connectivity.
 
-The latest valid code is stored locally after being retrieved from the backend.
-
-This provides a fallback when a user temporarily loses internet connectivity after opening the application and retrieving the current code.
+---
 
 ## Project Structure
-
-The application uses a screen-based React Native structure with separate areas for authentication and main application functionality.
 
 ```text
 src/
@@ -160,82 +150,69 @@ src/
         └── ProfilePage
 ```
 
-The application entry point configures the navigation container and controls the initial authentication flow.
+---
 
 ## Getting Started
 
 ### Prerequisites
-
-* Node.js
-* npm
-* Expo CLI / Expo development environment
-* Android Studio or Xcode for native development, depending on the target platform
+- Node.js 18 or newer
+- npm (or yarn / pnpm)
 
 ### Installation
 
-Clone the repository:
-
 ```bash
 git clone https://github.com/RagindaBijo/Elevator-App.git
-```
-
-Navigate into the project:
-
-```bash
 cd Elevator-App
-```
-
-Install dependencies:
-
-```bash
 npm install
 ```
 
-Start the Expo development server:
+### Running the App
 
+#### Option 1 – Web (easiest, no extra apps needed)
 ```bash
-npm start
+npx expo start --web
+```
+The app will open in your browser at `http://localhost:8081`.
+
+#### Option 2 – Mobile with Expo Go
+1. Install the free **Expo Go** app on your phone ([iOS](https://apps.apple.com/app/expo-go/id982107779) / [Android](https://play.google.com/store/apps/details?id=host.exp.exponent))
+2. Run:
+   ```bash
+   npx expo start
+   ```
+3. Scan the QR code with Expo Go
+
+#### Option 3 – Native builds (optional)
+```bash
+npx expo run:android
+# or
+npx expo run:ios
 ```
 
-You can also start the project directly for a specific platform:
-
-```bash
-npm run android
-```
-
-```bash
-npm run ios
-```
-
-```bash
-npm run web
-```
-
-These scripts are defined in the project's `package.json`.
+---
 
 ## Project Status
 
-The mobile application has been developed as a complete prototype around the proposed elevator-access workflow.
+This is a complete working prototype of the elevator-access workflow.
 
-The project was created independently and was intended for potential use by an early-stage elevator-access startup. The application was developed based on the business requirements provided by the startup, but the project was ultimately not commercialized.
+It was built independently based on requirements from an early-stage startup and was intended for potential commercial use. The project was ultimately not commercialized.
+
+---
 
 ## What I Learned
 
-This project provided hands-on experience with:
+- Turning a real business requirement into a working mobile + web application
+- React Native & Expo development (including web support)
+- Authentication flows and role-based navigation
+- Designing for intermittent connectivity
+- Building a serverless backend with Cloudflare Workers, D1 and R2
+- Balancing security, cost and user experience
+- Local data persistence strategies
 
-* Designing a mobile application from a real-world business requirement
-* React Native and Expo development
-* Mobile navigation and authentication flows
-* API-driven application architecture
-* Cloudflare serverless services
-* Database design and user data management
-* Scheduled backend logic
-* Local data persistence
-* Designing for intermittent network connectivity
-* Balancing security, infrastructure usage, and user experience
+---
 
 ## Author
 
-**Luka Ivaniadze**
-
-GitHub: https://github.com/RagindaBijo
+**Luka Ivaniadze**  
+GitHub: [https://github.com/RagindaBijo](https://github.com/RagindaBijo)
+```
